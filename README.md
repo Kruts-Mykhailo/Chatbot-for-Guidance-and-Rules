@@ -11,3 +11,8 @@ This repository contains data-driven and AI-related tasks for the BanditGames pr
 
 - **AI Chatbot**  
   - Assist players with game rules and platform navigation.
+
+
+## Training models:
+
+All models should be trained on information returned from file Statistics.csv 
