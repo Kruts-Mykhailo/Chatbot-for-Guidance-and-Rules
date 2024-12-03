@@ -1,13 +1,6 @@
 {
     "guidance": [
       {
-        "topic":"Explain platform",
-        "keywords": ["platform", "where am I", ""],
-        "steps": [
-          "BanditGames is an emerging digital gaming platform dedicated to creating a vibrant, interactive space for board game enthusiasts. \n With a focus on innovation and user-centric experiences, the platform aims to provide a seamless environment where players can purchase, play, and enjoy board games while engaging with friends and  tracking their progress. \n"
-        ]
-      },  
-      {
         "topic": "Account Setup",
         "keywords": ["create account", "sign up", "register", "account setup"],
         "steps": [
