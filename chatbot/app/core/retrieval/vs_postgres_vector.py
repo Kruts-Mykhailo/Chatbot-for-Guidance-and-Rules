@@ -1,17 +1,18 @@
 from typing import List
 from psycopg2.extensions import connection
-from chatbot.core.embeddings_generator.embeddings_generator_abstract import EmbeddingGenerator
-from chatbot.core.embeddings_generator.embeddings_generator_factory import get_embedding_generator
-from chatbot.core.vector_search.vector_search_abstract import VectorSearch
+
 import numpy as np
 import psycopg2
 from psycopg2.extras import execute_batch, RealDictCursor
 import os
 from dotenv import load_dotenv
-
-from chatbot.platform_guidance import guidance_loader
-
 import logging
+
+from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
+from app.core.embedding.embeddings_generator_factory import get_generator
+from app.configurations import guidance_loader
+from app.core.retrieval.vector_search_abstract import VectorSearch
+
 
 
 load_dotenv()
@@ -138,7 +139,7 @@ class PGVectorSearch(VectorSearch):
         
     def upload_guidance_data(self) -> None:
             try:
-                embedding_generator: EmbeddingGenerator = get_embedding_generator(self.generator_type)
+                embedding_generator: EmbeddingGenerator = get_generator(self.generator_type)
                 texts = guidance_loader.seed_data()
                 topics = [1] * len(texts) 
                 embeddings = embedding_generator.generate_embeddings(texts)

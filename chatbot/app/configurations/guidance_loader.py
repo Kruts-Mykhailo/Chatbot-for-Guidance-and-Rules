@@ -1,14 +1,14 @@
-import json
 from typing import List, Dict
 import os
+
+from app.services.json_loader import load_from_file
 
 PLATFORM_GUIDANCE_JSON="platform_guidance_v2.0.json"
 
 def seed_data() -> List[str]:
     try:
         file_path = os.path.join(os.path.dirname(__file__), PLATFORM_GUIDANCE_JSON)
-        with open(file_path, "r") as file:
-            data = json.load(file)
+        data = load_from_file(file_path)
         texts = [
             f"Guidance for {guidance['topic']}: " + " ".join(guidance["steps"])
             for guidance in data["guidance"]
@@ -21,8 +21,8 @@ def seed_data() -> List[str]:
 
 def get_topics() -> List[str]:
     try:
-        with open(PLATFORM_GUIDANCE_JSON, "r") as file:
-            data = json.load(file)
+        file_path = os.path.join(os.path.dirname(__file__), PLATFORM_GUIDANCE_JSON)
+        data = load_from_file(file_path)
         return [guidance["topic"] for guidance in data["guidance"]]
     
     except Exception as e:
