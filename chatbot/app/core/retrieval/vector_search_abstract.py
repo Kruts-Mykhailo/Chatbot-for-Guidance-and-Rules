@@ -16,7 +16,7 @@ class VectorSearch(ABC):
         pass
 
     @abstractmethod
-    def upload_data(self, texts: List[str], embeddings: np.ndarray, topic: int) -> None:
+    def upload_data(self, text_to_embed: str, info: str, embeddings: np.ndarray, topic: int) -> None:
         pass
 
     @abstractmethod

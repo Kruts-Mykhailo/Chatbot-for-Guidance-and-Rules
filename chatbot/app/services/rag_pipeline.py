@@ -14,12 +14,12 @@ def rag_pipeline(query: List[str], search: VectorSearch, embedding_generator: Em
     retrieved_text: str = search.find_closest_text(query_embedding)
 
     if not retrieved_text or category == 'unknown':
-        return "Sorry, I can only answer questions about game rules or platform guidance."
+        return "Sorry, I can only answer questions about games on this platform or platform guidance."
 
     findings = get_game_entities(query[0])
     known_games = search.get_all_board_game_names()
 
-    if category == "rules" and is_game_not_known(findings, known_games):
+    if (category == "rules" and is_game_not_known(findings, known_games)):
         return "Sorry, I do not know anything about this game. I am a chatbot that can only utilize the information from my knowledge base."
 
     base_prompt = construct_prompt(category, retrieved_text)

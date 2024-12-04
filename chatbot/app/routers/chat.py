@@ -28,4 +28,4 @@ async def chat(
 
         return QueryResponse(response=chatbot_response)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing the request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing the request: {str(e)} {str(e.with_traceback)}")

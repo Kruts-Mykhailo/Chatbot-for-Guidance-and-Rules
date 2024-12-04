@@ -20,11 +20,12 @@ load_dotenv()
 class PGVectorSearch(VectorSearch):
     def __init__(self) -> None:
         self.connection = None  # Initialize as None
-        self.similarity_threshold: float = 0.5
+        self.similarity_threshold: float = 0.8
         self.generator_type: str = "sentence_transformer"
         try:
             self.connection = self.connect()
             if self.connection:  # Proceed only if connection is successful
+                self.create_table()
                 self.create_game_names_table()
                 self.ensure_guidance_data()
         except Exception as e:
@@ -39,7 +40,6 @@ class PGVectorSearch(VectorSearch):
                 host=os.getenv("DB_HOST"),
                 port=os.getenv("DB_PORT"),
             )
-            self.create_table()
 
             return conn
         
@@ -56,23 +56,25 @@ class PGVectorSearch(VectorSearch):
                             id SERIAL PRIMARY KEY,
                             topic INT NOT NULL,
                             text TEXT NOT NULL,
+                            info TEXT,
                             embeddings VECTOR(768)
                         );
                     """)
                     self.connection.commit()
+                    logging.info("Table create process")
             except Exception as e:
                 logging.error(f"Error creating table: {e}")
 
-    def upload_data(self, texts: List[str], embeddings: np.ndarray, topic: int) -> None:
+    def upload_data(self, text_to_embed: str, info: str, embeddings: np.ndarray, topic: int) -> None:
         if self.connection:
             try:
                 with self.connection.cursor() as cursor:
                     sql = """
-                        INSERT INTO vector_data (topic, text, embeddings)
-                        VALUES (%s, %s, %s);
+                        INSERT INTO vector_data (topic, text, info, embeddings)
+                        VALUES (%s, %s, %s. %s);
                     """
                     data = [
-                        (topic, text, embedding.tolist()) for text, embedding in zip(texts, embeddings)
+                        (topic, text_to_embed, info, embeddings.tolist())
                     ]
                     execute_batch(cursor, sql, data)
                     self.connection.commit()
@@ -85,13 +87,13 @@ class PGVectorSearch(VectorSearch):
             try:
                 with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
                     cursor.execute("""
-                        SELECT id, topic, text, embeddings <-> %s::vector AS distance
+                        SELECT id, topic, text, info, embeddings <-> %s::vector AS distance
                         FROM vector_data
                         ORDER BY distance ASC
                         LIMIT 1;
                     """, (query_embedding.tolist()))
                     results = cursor.fetchall()
-                    return results[0]['text']
+                    return results[0]['info']
             except Exception as e:
                 print(f"Error finding closest text: {e}")
         return ""
@@ -112,12 +114,7 @@ class PGVectorSearch(VectorSearch):
                 category = "unknown"
 
                 if result and result["distance"] is not None:
-                    # Check if the similarity is below the threshold
-                    if result["distance"] >= self.similarity_threshold:
-                        topic = result["topic"]
-                        category =  guidance_loader.get_category_map().get(topic, category)
-                    else:
-                        logging.warning(f"Query similarity is too low: {result['distance']}. Categorizing as unrelated.")
+                    category = result["topic"]                
                 return category
         except Exception as e:
             logging.warning(f"Error identifying category: {e}")
@@ -140,17 +137,17 @@ class PGVectorSearch(VectorSearch):
     def upload_guidance_data(self) -> None:
             try:
                 embedding_generator: EmbeddingGenerator = get_generator(self.generator_type)
-                texts = guidance_loader.seed_data()
-                topics = [1] * len(texts) 
-                embeddings = embedding_generator.generate_embeddings(texts)
+                informations, texts_to_imbed = guidance_loader.seed_data()
+                topics = [1] * len(informations) 
+                embeddings = embedding_generator.generate_embeddings(texts_to_imbed)
 
                 with self.connection.cursor() as cursor:
                     sql = """
-                        INSERT INTO vector_data (topic, text, embeddings)
-                        VALUES (%s, %s, %s);
+                        INSERT INTO vector_data (topic, text, info, embeddings)
+                        VALUES (%s, %s, %s, %s);
                     """
                     data = [
-                        (topic, text, embedding.tolist()) for topic, text, embedding in zip(topics, texts, embeddings)
+                        (topic, text, info, embedding.tolist()) for topic, text, info, embedding in zip(topics, texts_to_imbed, informations, embeddings)
                     ]
                     execute_batch(cursor, sql, data)
                     self.connection.commit()
