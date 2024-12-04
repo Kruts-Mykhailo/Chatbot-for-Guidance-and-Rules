@@ -1,9 +1,7 @@
 from typing import List
+from chatbot.core.embeddings_generator.embeddings_generator_abstract import EmbeddingGenerator
 import numpy as np
 from sentence_transformers import SentenceTransformer
-
-from chatbot.embeddings_generator.embeddings_generator_abstract import EmbeddingGenerator
-
 
 
 class SentenceTransformerEmbeddingGenerator(EmbeddingGenerator):

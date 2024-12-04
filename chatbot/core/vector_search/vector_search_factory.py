@@ -1,7 +1,5 @@
-
-
-from chatbot.vector_search.vector_search_abstract import VectorSearch
-from chatbot.vector_search.vs_postgres_vector import PGVectorSearch
+from chatbot.core.vector_search.vector_search_abstract import VectorSearch
+from chatbot.core.vector_search.vs_postgres_vector import PGVectorSearch
 
 
 def get_solution(solution_type: str = "pgvector") -> VectorSearch:

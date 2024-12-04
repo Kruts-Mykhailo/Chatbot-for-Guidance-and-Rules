@@ -1,5 +1,7 @@
 from typing import List
 from psycopg2.extensions import connection
+from chatbot.core.embeddings_generator.embeddings_generator_abstract import EmbeddingGenerator
+from chatbot.core.embeddings_generator.embeddings_generator_factory import get_embedding_generator
 from chatbot.core.vector_search.vector_search_abstract import VectorSearch
 import numpy as np
 import psycopg2
@@ -7,8 +9,6 @@ from psycopg2.extras import execute_batch, RealDictCursor
 import os
 from dotenv import load_dotenv
 
-from chatbot.embeddings_generator.embeddings_generator_abstract import EmbeddingGenerator
-from chatbot.embeddings_generator.embeddings_generator_factory import get_embedding_generator
 from chatbot.platform_guidance import guidance_loader
 
 import logging
