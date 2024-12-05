@@ -1,6 +1,7 @@
 from app.core.language_models.llm_abstract import BaseLLM
 from app.core.language_models.llm_ollama import OllamaLLM
 
+
 def get_llm_instance(llm_type: str) -> BaseLLM:
     """
     Factory function to create an instance of the requested LLM implementation.

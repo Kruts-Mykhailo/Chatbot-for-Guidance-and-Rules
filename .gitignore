@@ -1,7 +1,7 @@
-/chatbot/.venv/
+.venv/
 
 /chatbot/.env
-
+/chatbot/.mypy_cache
 /chatbot/app/__pycache__
 /chatbot/app/configurations/__pycache__
 /chatbot/app/core/embedding/__pycache__

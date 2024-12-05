@@ -1,25 +1,24 @@
-from typing import List
-from psycopg2.extensions import connection
+import logging
+import os
+from typing import List, Optional
 
 import numpy as np
 import psycopg2
-from psycopg2.extras import execute_batch, RealDictCursor
-import os
 from dotenv import load_dotenv
-import logging
+from psycopg2.extensions import connection
+from psycopg2.extras import RealDictCursor, execute_batch
 
+from app.configurations import guidance_loader
 from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
 from app.core.embedding.embeddings_generator_factory import get_generator
-from app.configurations import guidance_loader
 from app.core.retrieval.vector_search_abstract import VectorSearch
-
-
 
 load_dotenv()
 
+
 class PGVectorSearch(VectorSearch):
     def __init__(self) -> None:
-        self.connection = None  # Initialize as None
+        self.connection: Optional[connection] = None  # Initialize as None
         self.similarity_threshold: float = 0.8
         self.generator_type: str = "sentence_transformer"
         try:
@@ -42,7 +41,7 @@ class PGVectorSearch(VectorSearch):
             )
 
             return conn
-        
+
         except Exception as e:
             logging.error(f"Error connecting to PostgreSQL database: {e}")
             raise e
@@ -51,7 +50,8 @@ class PGVectorSearch(VectorSearch):
         if self.connection:
             try:
                 with self.connection.cursor() as cursor:
-                    cursor.execute("""
+                    cursor.execute(
+                        """
                         CREATE TABLE IF NOT EXISTS vector_data (
                             id SERIAL PRIMARY KEY,
                             topic INT NOT NULL,
@@ -59,13 +59,16 @@ class PGVectorSearch(VectorSearch):
                             info TEXT,
                             embeddings VECTOR(768)
                         );
-                    """)
+                    """
+                    )
                     self.connection.commit()
                     logging.info("Table create process")
             except Exception as e:
                 logging.error(f"Error creating table: {e}")
 
-    def upload_data(self, text_to_embed: str, info: str, embeddings: np.ndarray, topic: int) -> None:
+    def upload_data(
+        self, text_to_embed: str, info: str, embeddings: np.ndarray, topic: int
+    ) -> None:
         if self.connection:
             try:
                 with self.connection.cursor() as cursor:
@@ -73,9 +76,7 @@ class PGVectorSearch(VectorSearch):
                         INSERT INTO vector_data (topic, text, info, embeddings)
                         VALUES (%s, %s, %s. %s);
                     """
-                    data = [
-                        (topic, text_to_embed, info, embeddings.tolist())
-                    ]
+                    data = [(topic, text_to_embed, info, embeddings.tolist())]
                     execute_batch(cursor, sql, data)
                     self.connection.commit()
                     logging.info("Data uploaded successfully.")
@@ -86,45 +87,61 @@ class PGVectorSearch(VectorSearch):
         if self.connection:
             try:
                 with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
-                    cursor.execute("""
+                    cursor.execute(
+                        """
                         SELECT id, topic, text, info, embeddings <-> %s::vector AS distance
                         FROM vector_data
                         ORDER BY distance ASC
                         LIMIT 1;
-                    """, (query_embedding.tolist()))
+                    """,
+                        (query_embedding.tolist()),
+                    )
                     results = cursor.fetchall()
-                    return results[0]['info']
+                    return results[0]["info"]
             except Exception as e:
                 print(f"Error finding closest text: {e}")
         return ""
-    
+
     def get_category(self, query_embedding: np.ndarray) -> str:
+        if self.connection is None:
+            logging.error("Connection is not established. Cannot create table.")
+            return "unknown"
+
         try:
             query_embedding = np.array(query_embedding).ravel()
 
             with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
-                cursor.execute("""
+                cursor.execute(
+                    """
                     SELECT topic, embeddings <-> %s::vector AS distance
                     FROM vector_data
                     ORDER BY distance ASC
                     LIMIT 1;
-                """, (query_embedding.tolist(),))
-                
+                """,
+                    (query_embedding.tolist(),),
+                )
+
                 result = cursor.fetchone()
                 category = "unknown"
 
                 if result and result["distance"] is not None:
-                    category = result["topic"]                
+                    category = result["topic"]
                 return category
         except Exception as e:
             logging.warning(f"Error identifying category: {e}")
             return "unknown"
 
-
     def contains_guidance_data(self) -> bool:
+        if self.connection is None:
+            logging.error(
+                "Connection is not established. Cannot identify guidance data presence."
+            )
+            return False
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute("SELECT COUNT(*) FROM vector_data WHERE topic = %s;", (1,))
+                cursor.execute(
+                    "SELECT COUNT(*) FROM vector_data WHERE topic = %s;", (1,)
+                )
                 result = cursor.fetchone()
                 if result is None:
                     logging.error(f"Error checking for guidance data: Fetched None")
@@ -133,28 +150,35 @@ class PGVectorSearch(VectorSearch):
         except Exception as e:
             logging.error(f"Error checking for guidance data: {e}")
             return False
-        
-    def upload_guidance_data(self) -> None:
-            try:
-                embedding_generator: EmbeddingGenerator = get_generator(self.generator_type)
-                informations, texts_to_imbed = guidance_loader.seed_data()
-                topics = [1] * len(informations) 
-                embeddings = embedding_generator.generate_embeddings(texts_to_imbed)
 
-                with self.connection.cursor() as cursor:
-                    sql = """
+    def upload_guidance_data(self) -> None:
+        if self.connection is None:
+            logging.error("Connection is not established. Cannot upload guidance data.")
+            return
+
+        try:
+            embedding_generator: EmbeddingGenerator = get_generator(self.generator_type)
+            informations, texts_to_imbed = guidance_loader.seed_data()
+            topics = [1] * len(informations)
+            embeddings = embedding_generator.generate_embeddings(texts_to_imbed)
+
+            with self.connection.cursor() as cursor:
+                sql = """
                         INSERT INTO vector_data (topic, text, info, embeddings)
                         VALUES (%s, %s, %s, %s);
                     """
-                    data = [
-                        (topic, text, info, embedding.tolist()) for topic, text, info, embedding in zip(topics, texts_to_imbed, informations, embeddings)
-                    ]
-                    execute_batch(cursor, sql, data)
-                    self.connection.commit()
-                    logging.info(f"Uploaded {len(data)} guidance records to the database.")
-            except Exception as e:
-                logging.error(f"Error uploading guidance data: {e}")
-                
+                data = [
+                    (topic, text, info, embedding.tolist())
+                    for topic, text, info, embedding in zip(
+                        topics, texts_to_imbed, informations, embeddings
+                    )
+                ]
+                execute_batch(cursor, sql, data)
+                self.connection.commit()
+                logging.info(f"Uploaded {len(data)} guidance records to the database.")
+        except Exception as e:
+            logging.error(f"Error uploading guidance data: {e}")
+
     def ensure_guidance_data(self) -> None:
         if not self.contains_guidance_data():
             logging.info("No guidance data found. Uploading from file...")
@@ -162,25 +186,34 @@ class PGVectorSearch(VectorSearch):
         else:
             logging.info("Guidance data already exists in the database.")
 
-
     def create_game_names_table(self) -> None:
-        """
-        Creates the `game_names` table in the database if it doesn't exist.
-        """
+        if self.connection is None:
+            logging.error(
+                "Connection is not established. Cannot create table game_names."
+            )
+            return
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute("""
+                cursor.execute(
+                    """
                     CREATE TABLE IF NOT EXISTS game_names (
                         id SERIAL PRIMARY KEY,
                         name TEXT NOT NULL UNIQUE
                     );
-                """)
+                """
+                )
                 self.connection.commit()
                 logging.info("Table 'game_names' created successfully.")
         except Exception as e:
             logging.error(f"Error creating game_names table: {e}")
 
     def get_all_board_game_names(self) -> List[str]:
+        if self.connection is None:
+            logging.error(
+                "Connection is not established. Cannot retrieve board game names."
+            )
+            return []
+
         try:
             with self.connection.cursor() as cursor:
                 cursor.execute("SELECT name FROM game_names;")
@@ -191,8 +224,9 @@ class PGVectorSearch(VectorSearch):
             return []
 
     def close(self) -> None:
+        if self.connection is None:
+            logging.error(
+                "Connection was not established. Cannot close inexistent connection."
+            )
+            return
         self.connection.close()
-
-
-
-    

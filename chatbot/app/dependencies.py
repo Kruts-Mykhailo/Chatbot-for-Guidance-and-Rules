@@ -9,6 +9,7 @@ vector_search = None
 embedding_generator = None
 model = None
 
+
 async def init_dependencies(app: FastAPI, args):
     """
     Initialize dependencies with command-line arguments.
@@ -35,6 +36,7 @@ async def init_dependencies(app: FastAPI, args):
     app.state.embedding_generator = embedding_generator
     app.state.model = model
 
+
 async def shutdown_dependencies(app: FastAPI):
     """
     Shutdown dependencies and release resources.
@@ -48,6 +50,7 @@ async def shutdown_dependencies(app: FastAPI):
     embedding_generator = None
     model = None
 
+
 def get_vector_search():
     """
     Dependency for vector search.
@@ -56,6 +59,7 @@ def get_vector_search():
         raise RuntimeError("Vector search not initialized")
     return vector_search
 
+
 def get_embedding_generator():
     """
     Dependency for embedding generator.
@@ -63,6 +67,7 @@ def get_embedding_generator():
     if not embedding_generator:
         raise RuntimeError("Embedding generator not initialized")
     return embedding_generator
+
 
 def get_model():
     """

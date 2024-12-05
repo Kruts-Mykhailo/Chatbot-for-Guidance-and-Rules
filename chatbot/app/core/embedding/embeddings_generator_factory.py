@@ -1,4 +1,6 @@
-from app.core.embedding.eg_sentence_transformer import SentenceTransformerEmbeddingGenerator
+from app.core.embedding.eg_sentence_transformer import (
+    SentenceTransformerEmbeddingGenerator,
+)
 from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
 
 
