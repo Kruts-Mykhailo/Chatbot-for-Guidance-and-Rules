@@ -89,9 +89,9 @@ class PGVectorSearch(VectorSearch):
                 with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
                     cursor.execute(
                         """
-                        SELECT id, topic, text, info, embeddings <-> %s::vector AS distance
+                        SELECT id, topic, text, info, 1 - (embeddings <=> %s::vector) AS similarity
                         FROM vector_data
-                        ORDER BY distance ASC
+                        ORDER BY similarity DESC
                         LIMIT 1;
                     """,
                         (query_embedding.tolist()),
@@ -113,9 +113,9 @@ class PGVectorSearch(VectorSearch):
             with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
                 cursor.execute(
                     """
-                    SELECT topic, embeddings <-> %s::vector AS distance
+                    SELECT topic, 1 - (embeddings <=> %s::vector) AS similarity
                     FROM vector_data
-                    ORDER BY distance ASC
+                    ORDER BY similarity DESC
                     LIMIT 1;
                 """,
                     (query_embedding.tolist(),),
@@ -124,7 +124,8 @@ class PGVectorSearch(VectorSearch):
                 result = cursor.fetchone()
                 category = "unknown"
 
-                if result and result["distance"] is not None:
+                if result and result["similarity"] is not None:
+                    print(f"The cosine similarity to closest category: {result["similarity"]}")
                     category = result["topic"]
                 return category
         except Exception as e:
