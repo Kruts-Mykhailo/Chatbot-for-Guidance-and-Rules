@@ -82,8 +82,8 @@ python run_tools.py
 
 Things considering to add:
 1. `pg_vector` cosine similarity 
-2. extracting category of query using LLM
-3. transforming a query using LLM for better retrieval
+2. Update embeddings. Store a decent amount of queries that a user might ask about a specific document.
+3.
 
 When observed, the distance to the closest embedded text, the distance is around 0.78 -> 0.9. Due to usage of pg_vector, the distance is calculated using euclidian metric.
 

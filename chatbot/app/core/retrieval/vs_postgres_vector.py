@@ -19,7 +19,7 @@ load_dotenv()
 class PGVectorSearch(VectorSearch):
     def __init__(self) -> None:
         self.connection: Optional[connection] = None  # Initialize as None
-        self.similarity_threshold: float = 0.8
+        self.similarity_threshold: float = 0.3
         self.generator_type: str = "sentence_transformer"
         try:
             self.connection = self.connect()
@@ -89,9 +89,9 @@ class PGVectorSearch(VectorSearch):
                 with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
                     cursor.execute(
                         """
-                        SELECT id, topic, text, info, embeddings <-> %s::vector AS distance
+                        SELECT id, topic, text, info, 1 - (embeddings <=> %s::vector) AS similarity
                         FROM vector_data
-                        ORDER BY distance ASC
+                        ORDER BY similarity DESC
                         LIMIT 1;
                     """,
                         (query_embedding.tolist()),
@@ -109,13 +109,13 @@ class PGVectorSearch(VectorSearch):
 
         try:
             query_embedding = np.array(query_embedding).ravel()
-
+ 
             with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
                 cursor.execute(
                     """
-                    SELECT topic, embeddings <-> %s::vector AS distance
+                    SELECT topic, 1 - (embeddings <=> %s::vector) AS similarity
                     FROM vector_data
-                    ORDER BY distance ASC
+                    ORDER BY similarity DESC
                     LIMIT 1;
                 """,
                     (query_embedding.tolist(),),
@@ -124,8 +124,10 @@ class PGVectorSearch(VectorSearch):
                 result = cursor.fetchone()
                 category = "unknown"
 
-                if result and result["distance"] is not None:
-                    category = result["topic"]
+                if result and result["similarity"] is not None:
+                    print(f"The cosine similarity to closest category: {result["similarity"]}")
+                    if result["similarity"] > self.similarity_threshold:
+                        category = result["topic"]
                 return category
         except Exception as e:
             logging.warning(f"Error identifying category: {e}")
