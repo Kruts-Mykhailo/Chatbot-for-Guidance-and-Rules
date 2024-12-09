@@ -14,10 +14,11 @@ def seed_data() -> Tuple[List[str], List[str]]:
             f"Guidance for {guidance["topic"]}: " + " ".join(guidance["steps"])
             for guidance in data["guidance"]
         ]
-        infos = [
-            prepare_for_embedding(guidance["topic"], guidance["keywords"])
-            for guidance in data["guidance"]
-        ]
+        infos = [" ".join(guidance["example_queries"]) for guidance in data["guidance"]]
+        # infos = [
+        #     prepare_for_embedding(guidance["topic"], guidance["keywords"])
+        #     for guidance in data["guidance"]
+        # ]
 
         return texts, infos
     except Exception as e:

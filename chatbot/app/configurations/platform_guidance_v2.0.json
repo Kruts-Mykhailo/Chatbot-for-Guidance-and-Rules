@@ -1,169 +1,259 @@
 {
-    "guidance": [
-      {
-        "topic": "Account Setup",
-        "keywords": ["create account", "sign up", "register", "account setup"],
-        "steps": [
-          "Go to the create your account page.",
-          "Input your username. The username could be an email or a set of characters that you can remember.",
-          "Create a secure password. The password should contain: \n - At least one capital letter.\n - A minimum length of 8 characters.\n - Digits 0-9.",
-          "Additionally, input information: Age, Location, Gender.",
-          "Click `Sign Up`.",
-          "Congratulations! You are now able to fully use the platform."
-        ]
-      },
-      {
-        "topic": "Log in",
-        "keywords": ["login", "log in", "access account", "sign in"],
-        "steps": [
-          "Click on the 'Log In' button.",
-          "You will be redirected to a page where you should input your username/email and password.",
-          "Log in to the platform using your credentials."
-        ]
-      },
-      {
-        "topic": "Update Account Information",
-        "keywords": ["update account", "change profile info", "edit details"],
-        "steps": [
-          "Navigate to your Account page.",
-          "Change the information you want.",
-          "Verify that the new information is correct.",
-          "Submit the changes."
-        ]
-      },
-      {
-        "topic": "Playing Board Games",
-        "keywords": ["play game", "board games", "gameplay", "start game"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Pick a game from the vast selection of board games.",
-          "Click on the desired game.",
-          "On the game information page, press `Play`. You will be given a choice to play:\n - With a random player.\n - With a friend.",
-          "(Option 1): If you choose to play with a random player, you will be joined in a lobby, and the game will start shortly.",
-          "(Option 2): If you choose to play with a friend, you will be joined in a lobby and provided with a list of your friends.\n Send an invitation to a friend you wish to play with.\n Once your friend accepts the invitation, they will join your lobby, and the game will start soon.",
-          "You and your opponent will be redirected to the game page.",
-          "Enjoy your game!"
-        ]
-      },
-      {
-        "topic": "Play with a Friend",
-        "keywords": ["play with friend", "invite friend", "friend game"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Pick a game from the vast selection of board games.",
-          "Click on the desired game.",
-          "On the game information page, press `Play`. You will be given a choice to play:\n - With a random player.\n - With a friend.",
-          "Select the option `Play with a Friend`.",
-          "You will be joined in a lobby and provided with a list of your friends.\n Send an invitation to a friend you wish to play with.\n Once your friend accepts the invitation, they will join your lobby, and the game will start soon.",
-          "You and your opponent will be redirected to the game page.",
-          "Enjoy your game!"
-        ]
-      },
-      {
-        "topic": "Find Board Game",
-        "keywords": ["search game", "find board game", "locate game"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Use the search bar to find your desired board game.",
-          "Enjoy your game!"
-        ]
-      },
-      {
-        "topic": "Mark Game as Favourite",
-        "keywords": ["favorite game", "mark as favorite"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Pick a game from the vast selection of board games.",
-          "Click on the desired game.",
-          "On the game description page, click on 'Mark as Favourite'.",
-          "Later, you can filter board games by favourites, and the games you have marked will be on the list."
-        ]
-      },
-      {
-        "topic": "Join a Friend's Game",
-        "keywords": ["join game", "join friend game", "accept game invitation"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "If a friend has already invited you to a game, you will receive a notification.",
-          "Decline or accept the invitation.",
-          "If you accept the invitation, you will be redirected to a lobby with your friend, and the game will start shortly."
-        ]
-      },
-      {
-        "topic": "Add Friend",
-        "keywords": ["add friend", "connect with friends"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Go to the `My Account` page.",
-          "Scroll to the `My Friends` section.",
-          "Locate the `Connect with Your Friends` search bar.",
-          "Type the username of your friend in the search bar.",
-          "In the results section, click on your friend's username and click 'Send Invitation'.",
-          "If the person accepts your request, they will appear in your list of friends."
-        ]
-      },
-      {
-        "topic": "Friend Request",
-        "keywords": ["friend request", "manage requests", "accept friend"],
-        "steps": [
-          "Log in to the platform.",
-          "Go to the `My Account` page.",
-          "Scroll to the `My Friends` section.",
-          "Locate the `Friend Requests` list.",
-          "Click on the request.",
-          "Accept or decline the request from the sender."
-        ]
-      },
-      {
-        "topic": "View Game Achievements",
-        "keywords": ["game achievements", "view achievements", "progress"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Pick a game whose achievements you want to view.",
-          "On the game description page, scroll down to the `Achievements` section.",
-          "Here you will find all the achievements of the game and their statuses (Locked, Unlocked)."
-        ]
-      },
-      {
-        "topic": "Get Achievement Unlock Criteria",
-        "keywords": ["achievement criteria", "unlock achievement", "requirements"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Pick a game whose achievements you want to unlock.",
-          "On the game description page, scroll down to the `Achievements` section.",
-          "Find the achievement you want to unlock; there you will find the criteria you need to fulfill to unlock it.",
-          "If the criteria description is longer, click on the `More Info` button for additional details."
-        ]
-      },
-      {
-        "topic": "Unlock Achievement",
-        "keywords": ["unlock achievement","game rewards"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Navigate to the `Game Library` page.",
-          "Pick a game whose achievements you want to unlock.",
-          "On the game description page, scroll down to the `Achievements` section.",
-          "Here you will find all the achievements of the game and their statuses (Locked, Unlocked).",
-          "To unlock achievements, you need to complete the criteria while playing the required game.",
-          "After successfully completing an achievement, its status will change to `Unlocked`.",
-          "Happy achievement hunting!"
-        ]
-      },
-      {
-        "topic": "View Personal Statistics",
-        "keywords": ["statistics", "player stats"],
-        "steps": [
-          "Log in to the platform using your credentials.",
-          "Go to the `My Account` page.",
-          "Locate the `My Statistics` section, which provides general information about your playing history on the platform."
-        ]
-      }
-    ]
-  }
-  
+  "guidance": [
+    {
+      "topic": "Account Setup",
+      "keywords": ["create account", "sign up", "register", "account setup"],
+      "steps": [
+        "Go to the create your account page.",
+        "Input your username. The username could be an email or a set of characters that you can remember.",
+        "Create a secure password. The password should contain: ",
+        "- At least one capital letter.", 
+        "- A minimum length of 8 characters.",
+        "- Digits 0-9.",
+        "Additionally, input information: Age, Location, Gender.",
+        "Click `Sign Up`.",
+        "Congratulations! You are now able to fully use the platform."
+      ],
+      "example_queries": [
+        "How do I set up an account?",
+        "Steps to create an account on the platform?",
+        "What do I need to register on this platform?",
+        "How can I sign up for the service?"
+      ]
+    },
+    {
+      "topic": "Log in",
+      "keywords": ["login", "log in", "access account", "sign in"],
+      "steps": [
+        "Click on the 'Log In' button.",
+        "You will be redirected to a page where you should input your username/email and password.",
+        "Log in to the platform using your credentials."
+      ],
+      "example_queries": [
+        "How do I log in to my account?",
+        "Where can I enter my credentials to sign in?",
+        "Steps for logging into the platform?",
+        "How to access my account?"
+      ]
+    },
+    {
+      "topic": "Update Account Information",
+      "keywords": ["update account", "change profile info", "edit details"],
+      "steps": [
+        "Navigate to your Account page.",
+        "Change the information you want.",
+        "Verify that the new information is correct.",
+        "Submit the changes."
+      ],
+      "example_queries": [
+        "How can I update my profile details?",
+        "Where do I edit my account information?",
+        "Steps to update personal information on the platform?",
+        "How do I change my profile settings?"
+      ]
+    },
+    {
+      "topic": "Playing Board Games",
+      "keywords": ["play game", "board games", "gameplay", "start game"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Pick a game from the vast selection of board games.",
+        "Click on the desired game.",
+        "On the game information page, press `Play`. You will be given a choice to play:",
+        "- With a random player.",
+        " - With a friend.",
+        "(Option 1): If you choose to play with a random player, you will be joined in a lobby, and the game will start shortly.",
+        "(Option 2): If you choose to play with a friend, you will be joined in a lobby and provided with a list of your friends.",
+        "Send an invitation to a friend you wish to play with.",
+        "Once your friend accepts the invitation, they will join your lobby, and the game will start soon.",
+        "You and your opponent will be redirected to the game page.",
+        "Enjoy your game!"
+      ],
+      "example_queries": [
+        "How can I start playing a board game?",
+        "Steps to begin a game on the platform?",
+        "Can I play board games with others?",
+        "How do I pick a game to play?"
+      ]
+    },
+    {
+      "topic": "Play with a Friend",
+      "keywords": ["play with friend", "invite friend", "friend game"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Pick a game from the vast selection of board games.",
+        "Click on the desired game.",
+        "On the game information page, press `Play`. You will be given a choice to play:\n - With a random player.\n - With a friend.",
+        "Select the option `Play with a Friend`.",
+        "You will be joined in a lobby and provided with a list of your friends.\n Send an invitation to a friend you wish to play with.\n Once your friend accepts the invitation, they will join your lobby, and the game will start soon.",
+        "You and your opponent will be redirected to the game page.",
+        "Enjoy your game!"
+      ],
+      "example_queries": [
+        "How do I invite a friend to play a game?",
+        "Steps to start a game with a friend?",
+        "Can I play board games with friends?",
+        "How to join a friend for a game?"
+      ]
+    },
+    {
+      "topic": "Find Board Game",
+      "keywords": ["search game", "find board game", "locate game"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Use the search bar to find your desired board game.",
+        "Enjoy your game!"
+      ],
+      "example_queries": [
+        "How do I find a specific board game?",
+        "Where is the search bar for games?",
+        "Steps to locate a board game on the platform?",
+        "How to search for games in the library?"
+      ]
+    },
+    {
+      "topic": "Mark Game as Favourite",
+      "keywords": ["favorite game", "mark as favorite"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Pick a game from the vast selection of board games.",
+        "Click on the desired game.",
+        "On the game description page, click on 'Mark as Favourite'.",
+        "Later, you can filter board games by favourites, and the games you have marked will be on the list."
+      ],
+      "example_queries": [
+        "How do I mark a game as my favorite?",
+        "Can I save board games as favorites?",
+        "Steps to favorite a game on the platform?",
+        "Where can I view my favorite games?"
+      ]
+    },
+    {
+      "topic": "Join a Friend's Game",
+      "keywords": ["join game", "join friend game", "accept game invitation"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "If a friend has already invited you to a game, you will receive a notification.",
+        "Decline or accept the invitation.",
+        "If you accept the invitation, you will be redirected to a lobby with your friend, and the game will start shortly."
+      ],
+      "example_queries": [
+        "How do I join a friend's game?",
+        "Where do I find game invitations?",
+        "Steps to accept a game invitation?",
+        "How can I play in a friend's game lobby?"
+      ]
+    },
+    {
+      "topic": "Add Friend",
+      "keywords": ["add friend", "connect with friends"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Go to the `My Account` page.",
+        "Scroll to the `My Friends` section.",
+        "Locate the `Connect with Your Friends` search bar.",
+        "Type the username of your friend in the search bar.",
+        "In the results section, click on your friend's username and click 'Send Invitation'.",
+        "If the person accepts your request, they will appear in your list of friends."
+      ],
+      "example_queries": [
+        "How do I add a new friend?",
+        "Steps to send a friend request?",
+        "Can I search for friends on the platform?",
+        "How to connect with others on the platform?"
+      ]
+    },
+    {
+      "topic": "Friend Request",
+      "keywords": ["friend request", "manage requests", "accept friend"],
+      "steps": [
+        "Log in to the platform.",
+        "Go to the `My Account` page.",
+        "Scroll to the `My Friends` section.",
+        "Locate the `Friend Requests` list.",
+        "Click on the request.",
+        "Accept or decline the request from the sender."
+      ],
+      "example_queries": [
+        "How do I accept a friend request?",
+        "Where can I manage friend requests?",
+        "Steps to decline a friend request?",
+        "How to view pending friend requests?"
+      ]
+    },
+    {
+      "topic": "View Game Achievements",
+      "keywords": ["game achievements", "view achievements", "progress"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Pick a game whose achievements you want to view.",
+        "On the game description page, scroll down to the `Achievements` section.",
+        "Here you will find all the achievements of the game and their statuses (Locked, Unlocked)."
+      ],
+      "example_queries": [
+        "How do I view my game achievements?",
+        "Where can I see the progress of my achievements?",
+        "Steps to check game achievements on the platform?",
+        "How to find locked and unlocked achievements for a game?"
+      ]
+    },
+    {
+      "topic": "Get Achievement Unlock Criteria",
+      "keywords": ["achievement criteria", "unlock achievement", "requirements"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Pick a game whose achievements you want to unlock.",
+        "On the game description page, scroll down to the `Achievements` section.",
+        "Find the achievement you want to unlock; there you will find the criteria you need to fulfill to unlock it.",
+        "If the criteria description is longer, click on the `More Info` button for additional details."
+      ],
+      "example_queries": [
+        "How do I unlock achievements?",
+        "What are the criteria for game achievements?",
+        "Steps to find the requirements to unlock achievements?",
+        "How to view the unlock details for a specific achievement?"
+      ]
+    },
+    {
+      "topic": "Unlock Achievement",
+      "keywords": ["unlock achievement","game rewards"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Navigate to the `Game Library` page.",
+        "Pick a game whose achievements you want to unlock.",
+        "On the game description page, scroll down to the `Achievements` section.",
+        "Here you will find all the achievements of the game and their statuses (Locked, Unlocked).",
+        "To unlock achievements, you need to complete the criteria while playing the required game.",
+        "After successfully completing an achievement, its status will change to `Unlocked`.",
+        "Happy achievement hunting!"
+      ],
+      "example_queries": [
+        "How can I unlock new achievements?",
+        "What steps are needed to unlock game rewards?",
+        "Can I unlock achievements by replaying games?",
+        "How to track my progress towards unlocking achievements?"
+      ]
+    },
+    {
+      "topic": "View Personal Statistics",
+      "keywords": ["statistics", "player stats"],
+      "steps": [
+        "Log in to the platform using your credentials.",
+        "Go to the `My Account` page.",
+        "Locate the `My Statistics` section, which provides general information about your playing history on the platform."
+      ],
+      "example_queries": [
+        "Where can I find my game statistics?",
+        "How do I view my personal stats?",
+        "Steps to see player statistics on the platform?",
+        "How to track my playing history and progress?"
+      ]
+    }
+  ]
+}
