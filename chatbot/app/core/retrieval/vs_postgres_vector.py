@@ -19,7 +19,7 @@ load_dotenv()
 class PGVectorSearch(VectorSearch):
     def __init__(self) -> None:
         self.connection: Optional[connection] = None  # Initialize as None
-        self.similarity_threshold: float = 0.8
+        self.similarity_threshold: float = 0.3
         self.generator_type: str = "sentence_transformer"
         try:
             self.connection = self.connect()
@@ -126,7 +126,8 @@ class PGVectorSearch(VectorSearch):
 
                 if result and result["similarity"] is not None:
                     print(f"The cosine similarity to closest category: {result["similarity"]}")
-                    category = result["topic"]
+                    if result["similarity"] > self.similarity_threshold:
+                        category = result["topic"]
                 return category
         except Exception as e:
             logging.warning(f"Error identifying category: {e}")
