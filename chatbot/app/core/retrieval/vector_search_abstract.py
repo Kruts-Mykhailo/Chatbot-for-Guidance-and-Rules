@@ -28,5 +28,9 @@ class VectorSearch(ABC):
         pass
 
     @abstractmethod
+    def get_category(self, query_embedding: np.ndarray) -> str:
+        pass
+
+    @abstractmethod
     def get_all_board_game_names(self) -> List[str]:
         pass

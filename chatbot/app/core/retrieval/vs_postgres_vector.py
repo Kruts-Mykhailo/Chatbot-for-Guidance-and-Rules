@@ -102,6 +102,35 @@ class PGVectorSearch(VectorSearch):
                 print(f"Error finding closest text: {e}")
         return ""
 
+    def get_category(self, query_embedding: np.ndarray) -> str:
+        if self.connection is None:
+            logging.error("Connection is not established. Cannot create table.")
+            return "unknown"
+
+        try:
+            query_embedding = np.array(query_embedding).ravel()
+ 
+            with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute(
+                    """
+                    SELECT topic, embeddings <-> %s::vector AS distance
+                    FROM vector_data
+                    ORDER BY distance ASC
+                    LIMIT 1;
+                """,
+                    (query_embedding.tolist(),),
+                )
+
+                result = cursor.fetchone()
+                category = "unknown"
+
+                if result and result["distance"] is not None:
+                    category = result["topic"]
+                return category
+        except Exception as e:
+            logging.warning(f"Error identifying category: {e}")
+            return "unknown"
+
     def contains_guidance_data(self) -> bool:
         if self.connection is None:
             logging.error(
