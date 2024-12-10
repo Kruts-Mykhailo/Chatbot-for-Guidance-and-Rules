@@ -96,7 +96,7 @@ async def process_game_added_event(
             topic=get_rules_category(),
         )
         vector_search.upload_game_name(event.gameName)
-        logging.info()
+        logging.info(f"New game {event.gameName} rules have been added")
 
     except Exception as e:
         print(f"Error parsing GameAddedEvent: {e}")
