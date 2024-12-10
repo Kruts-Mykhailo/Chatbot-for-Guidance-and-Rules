@@ -4,7 +4,7 @@ from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
 from app.core.language_models.llm_abstract import BaseLLM
 from app.core.language_models.llm_factory import construct_prompt
 from app.core.retrieval.vector_search_abstract import VectorSearch
-from app.services.game_service import get_game_entities, is_game_not_known
+from app.services.entity_extraction import get_game_entities, is_game_not_known
 
 
 def rag_pipeline(

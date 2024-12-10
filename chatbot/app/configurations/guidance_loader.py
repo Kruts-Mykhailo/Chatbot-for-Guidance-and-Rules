@@ -1,7 +1,7 @@
 import os
 from typing import Dict, List, Tuple
 
-from app.services.json_loader import load_from_file
+from app.util.json_loader import load_from_file
 
 PLATFORM_GUIDANCE_JSON = "platform_guidance_v2.0.json"
 

@@ -109,7 +109,7 @@ class PGVectorSearch(VectorSearch):
 
         try:
             query_embedding = np.array(query_embedding).ravel()
- 
+
             with self.connection.cursor(cursor_factory=RealDictCursor) as cursor:
                 cursor.execute(
                     """
@@ -125,7 +125,9 @@ class PGVectorSearch(VectorSearch):
                 category = "unknown"
 
                 if result and result["similarity"] is not None:
-                    print(f"The cosine similarity to closest category: {result["similarity"]}")
+                    print(
+                        f"The cosine similarity to closest category: {result["similarity"]}"
+                    )
                     if result["similarity"] > self.similarity_threshold:
                         category = result["topic"]
                 return category

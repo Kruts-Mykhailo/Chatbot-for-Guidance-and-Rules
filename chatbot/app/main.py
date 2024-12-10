@@ -1,10 +1,16 @@
 import argparse
+import asyncio
 from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
 
 from app.dependencies import init_dependencies, shutdown_dependencies
+from app.external_services.rabbitmq_consumer import (
+    add_queue_handler,
+    process_game_added_event,
+    start_all_queue_listeners,
+)
 from app.routers.chat import chat_router
 
 
@@ -38,9 +44,17 @@ async def lifespan(app: FastAPI):
     """
     args = parse_args()
     await init_dependencies(app, args)
+
+    vector_search = app.state.vector_search
+    add_queue_handler(
+        "new_game_queue", lambda data: process_game_added_event(data, vector_search)
+    )
+    rabbitmq_task = asyncio.create_task(start_all_queue_listeners())
+
     yield  # Application runs during this time
 
     # Shutdown tasks
+    rabbitmq_task.cancel()
     await shutdown_dependencies(app)  # Clean up resources
 
 

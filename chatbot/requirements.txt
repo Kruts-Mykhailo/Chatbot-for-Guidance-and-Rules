@@ -14,3 +14,4 @@ black
 mypy
 stubs
 types-psycopg2
+aio-pika
