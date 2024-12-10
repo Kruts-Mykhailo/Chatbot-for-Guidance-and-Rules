@@ -26,7 +26,7 @@ class VectorSearch(ABC):
         """
         pass
 
-    @abstractmethod    
+    @abstractmethod
     def upload_game_name(self, game_name: str) -> None:
         pass
 

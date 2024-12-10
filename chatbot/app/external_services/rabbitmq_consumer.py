@@ -1,6 +1,8 @@
 import asyncio
 import json
+from logging.config import dictConfig
 import os
+import logging
 
 from aio_pika import connect
 from dotenv import load_dotenv
@@ -10,6 +12,10 @@ from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
 from app.core.retrieval.vector_search_abstract import VectorSearch
 from app.external_services.event_model import GameAddedEvent
 from app.services.game_query_generator import generate_example_queries
+from app.configurations.logging_config import LOGGING_CONFIG
+
+dictConfig(LOGGING_CONFIG)
+
 
 # Load environment variables
 load_dotenv()
@@ -90,10 +96,7 @@ async def process_game_added_event(
             topic=get_rules_category(),
         )
         vector_search.upload_game_name(event.gameName)
-
-        print(f"Game received: {event.gameName}")
-        for rule in event.rules:
-            print(f"Rule: {rule.rule}, Description: {rule.description}")
+        logging.info()
 
     except Exception as e:
         print(f"Error parsing GameAddedEvent: {e}")

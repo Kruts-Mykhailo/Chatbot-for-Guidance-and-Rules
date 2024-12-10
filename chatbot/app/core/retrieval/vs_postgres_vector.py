@@ -1,5 +1,6 @@
 import logging
 import os
+from logging.config import dictConfig
 from typing import List, Optional
 
 import numpy as np
@@ -9,9 +10,12 @@ from psycopg2.extensions import connection
 from psycopg2.extras import RealDictCursor, execute_batch
 
 from app.configurations import guidance_loader
+from app.configurations.logging_config import LOGGING_CONFIG
 from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
 from app.core.embedding.embeddings_generator_factory import get_generator
 from app.core.retrieval.vector_search_abstract import VectorSearch
+
+dictConfig(LOGGING_CONFIG)
 
 load_dotenv()
 
@@ -26,7 +30,7 @@ class PGVectorSearch(VectorSearch):
             if self.connection:  # Proceed only if connection is successful
                 self.create_table()
                 self.create_game_names_table()
-                self.ensure_guidance_data()
+                self.upload_guidance_data()
         except Exception as e:
             logging.error(f"Error during initialization: {e}")
 
@@ -162,33 +166,75 @@ class PGVectorSearch(VectorSearch):
 
         try:
             embedding_generator: EmbeddingGenerator = get_generator(self.generator_type)
-            informations, texts_to_imbed = guidance_loader.seed_data()
+            informations, texts_to_embed = guidance_loader.seed_data()
             topics = [1] * len(informations)
-            embeddings = embedding_generator.generate_embeddings(texts_to_imbed)
+            embeddings = embedding_generator.generate_embeddings(texts_to_embed)
 
             with self.connection.cursor() as cursor:
-                sql = """
-                        INSERT INTO vector_data (topic, text, info, embeddings)
-                        VALUES (%s, %s, %s, %s);
+                # Step 1: Create a temporary staging table
+                cursor.execute(
                     """
-                data = [
+                    CREATE TEMP TABLE staging_vector_data (
+                        topic INT,
+                        text TEXT,
+                        info TEXT,
+                        embeddings VECTOR(768)
+                    );
+                    """
+                )
+
+                # Step 2: Insert new guidance data into the staging table
+                staging_data = [
                     (topic, text, info, embedding.tolist())
                     for topic, text, info, embedding in zip(
-                        topics, texts_to_imbed, informations, embeddings
+                        topics, texts_to_embed, informations, embeddings
                     )
                 ]
-                execute_batch(cursor, sql, data)
+                execute_batch(
+                    cursor,
+                    """
+                    INSERT INTO staging_vector_data (topic, text, info, embeddings)
+                    VALUES (%s, %s, %s, %s);
+                    """,
+                    staging_data,
+                )
+
+                # Step 3: Delete records in `vector_data` that are not in the staging table
+                cursor.execute(
+                    """
+                    DELETE FROM vector_data
+                    WHERE info NOT IN (SELECT info FROM staging_vector_data) AND topic = 1;
+                    """
+                )
+
+                # Step 4: Update existing records in `vector_data`
+                cursor.execute(
+                    """
+                    UPDATE vector_data
+                    SET text = staging.text,
+                        embeddings = staging.embeddings
+                    FROM staging_vector_data staging
+                    WHERE vector_data.info = staging.info;
+                    """
+                )
+
+                # Step 5: Insert new records from the staging table into `vector_data`
+                cursor.execute(
+                    """
+                    INSERT INTO vector_data (topic, text, info, embeddings)
+                    SELECT staging.topic, staging.text, staging.info, staging.embeddings
+                    FROM staging_vector_data staging
+                    LEFT JOIN vector_data ON vector_data.text = staging.text
+                    WHERE vector_data.text IS NULL;
+                    """
+                )
+
                 self.connection.commit()
-                logging.info(f"Uploaded {len(data)} guidance records to the database.")
+                logging.info(
+                    f"Uploaded {len(staging_data)} guidance records to the database."
+                )
         except Exception as e:
             logging.error(f"Error uploading guidance data: {e}")
-
-    def ensure_guidance_data(self) -> None:
-        if not self.contains_guidance_data():
-            logging.info("No guidance data found. Uploading from file...")
-            self.upload_guidance_data()
-        else:
-            logging.info("Guidance data already exists in the database.")
 
     def create_game_names_table(self) -> None:
         if self.connection is None:
@@ -237,11 +283,9 @@ class PGVectorSearch(VectorSearch):
 
     def upload_game_name(self, game_name: str) -> None:
         if self.connection is None:
-            logging.error(
-                "Connection is not established. Cannot upload game name."
-            )
+            logging.error("Connection is not established. Cannot upload game name.")
             return
-        
+
         try:
             with self.connection.cursor() as cursor:
                 sql = """
@@ -254,6 +298,3 @@ class PGVectorSearch(VectorSearch):
                 logging.info(f"New game {game_name} added successfully.")
         except Exception as e:
             logging.error(f"Error uploading game name: {e}")
-        
-
-
