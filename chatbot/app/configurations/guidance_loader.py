@@ -49,3 +49,7 @@ def get_category_map() -> Dict[int, str]:
         1: "guidance",
         2: "rules",
     }
+
+
+def get_rules_category() -> int:
+    return 2

@@ -21,6 +21,13 @@ class VectorSearch(ABC):
     def upload_data(
         self, text_to_embed: str, info: str, embeddings: np.ndarray, topic: int
     ) -> None:
+        """
+        Upload 1 record in vector database.
+        """
+        pass
+
+    @abstractmethod    
+    def upload_game_name(self, game_name: str) -> None:
         pass
 
     @abstractmethod

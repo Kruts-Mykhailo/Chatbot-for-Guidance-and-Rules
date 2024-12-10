@@ -5,8 +5,11 @@ import os
 from aio_pika import connect
 from dotenv import load_dotenv
 
+from app.configurations.guidance_loader import get_rules_category
+from app.core.embedding.embeddings_generator_abstract import EmbeddingGenerator
 from app.core.retrieval.vector_search_abstract import VectorSearch
 from app.external_services.event_model import GameAddedEvent
+from app.services.game_query_generator import generate_example_queries
 
 # Load environment variables
 load_dotenv()
@@ -63,12 +66,30 @@ async def start_all_queue_listeners():
     await asyncio.gather(*tasks)
 
 
-async def process_game_added_event(event_data, vector_search: VectorSearch):
+async def process_game_added_event(
+    event_data, vector_search: VectorSearch, embedding_generator: EmbeddingGenerator
+):
     """
     Process the GameAddedEvent and extract the game name and rules.
     """
     try:
         event = GameAddedEvent(**event_data)
+        rules = event.rules
+
+        text = f"Rules for {event.gameName}: {" ".join([" ".join([rule.rule, rule.description]) for rule in rules])}"
+        text_to_embed = " ".join(
+            [query for query in generate_example_queries(event.gameName)]
+        )
+
+        embedding = embedding_generator.generate_embeddings([text_to_embed])
+
+        vector_search.upload_data(
+            text_to_embed=text_to_embed,
+            info=text,
+            embeddings=embedding[0],
+            topic=get_rules_category(),
+        )
+        vector_search.upload_game_name(event.gameName)
 
         print(f"Game received: {event.gameName}")
         for rule in event.rules:

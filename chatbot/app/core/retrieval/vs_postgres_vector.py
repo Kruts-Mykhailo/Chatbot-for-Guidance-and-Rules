@@ -74,7 +74,7 @@ class PGVectorSearch(VectorSearch):
                 with self.connection.cursor() as cursor:
                     sql = """
                         INSERT INTO vector_data (topic, text, info, embeddings)
-                        VALUES (%s, %s, %s. %s);
+                        VALUES (%s, %s, %s, %s);
                     """
                     data = [(topic, text_to_embed, info, embeddings.tolist())]
                     execute_batch(cursor, sql, data)
@@ -234,3 +234,26 @@ class PGVectorSearch(VectorSearch):
             )
             return
         self.connection.close()
+
+    def upload_game_name(self, game_name: str) -> None:
+        if self.connection is None:
+            logging.error(
+                "Connection is not established. Cannot upload game name."
+            )
+            return
+        
+        try:
+            with self.connection.cursor() as cursor:
+                sql = """
+                    INSERT INTO game_names(name)
+                    VALUES (%s);
+                """
+                data = [(game_name,)]
+                execute_batch(cursor, sql, data)
+                self.connection.commit()
+                logging.info(f"New game {game_name} added successfully.")
+        except Exception as e:
+            logging.error(f"Error uploading game name: {e}")
+        
+
+
