@@ -266,6 +266,7 @@
       ],
       "example_queries": [
         "What is BanditGames?",
+        "Where am I?",
         "Can you tell me about the features of this platform?",
         "How does this platform work for board game enthusiasts?",
         "What social features are included in the platform?"
@@ -281,6 +282,8 @@
         "The chatbot also offers guidance on using platform features, such as account setup or inviting friends."
       ],
       "example_queries": [
+        "Who are you?",
+        "What is your purpouse?", 
         "What can the chatbot help me with?",
         "How do I ask the chatbot for game rules?",
         "Can the chatbot guide me on how to invite friends?",
