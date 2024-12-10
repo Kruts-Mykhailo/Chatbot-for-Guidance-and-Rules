@@ -1,7 +1,7 @@
 import os
 from typing import Dict, List, Tuple
 
-from app.services.json_loader import load_from_file
+from app.util.json_loader import load_from_file
 
 PLATFORM_GUIDANCE_JSON = "platform_guidance_v2.0.json"
 
@@ -49,3 +49,7 @@ def get_category_map() -> Dict[int, str]:
         1: "guidance",
         2: "rules",
     }
+
+
+def get_rules_category() -> int:
+    return 2

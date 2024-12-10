@@ -254,6 +254,41 @@
         "Steps to see player statistics on the platform?",
         "How to track my playing history and progress?"
       ]
+    },
+    {
+      "topic": "Platform Overview",
+      "keywords": ["platform features", "about platform", "what is the platform"],
+      "steps": [
+        "The platform, BanditGames, is a digital gaming space dedicated to board game enthusiasts.",
+        "Players can purchase, play, and enjoy various board games, including a flagship two-player game.",
+        "The platform includes social features such as inviting friends, tracking player progress, and a lobby for matchmaking.",
+        "Additional features include player statistics, goal achievement systems, and personalized game recommendations."
+      ],
+      "example_queries": [
+        "What is BanditGames?",
+        "Where am I?",
+        "Can you tell me about the features of this platform?",
+        "How does this platform work for board game enthusiasts?",
+        "What social features are included in the platform?"
+      ]
+    },
+    {
+      "topic": "Chatbot Assistance",
+      "keywords": ["chatbot help", "chatbot guide", "platform chatbot"],
+      "steps": [
+        "The platform includes an AI-powered chatbot to assist players.",
+        "The chatbot can provide step-by-step game rules retrieved from a structured database.",
+        "Players can ask the chatbot questions such as 'What are the rules for [Game]?' or 'How do I start a game?'.",
+        "The chatbot also offers guidance on using platform features, such as account setup or inviting friends."
+      ],
+      "example_queries": [
+        "Who are you?",
+        "What is your purpouse?", 
+        "What can the chatbot help me with?",
+        "How do I ask the chatbot for game rules?",
+        "Can the chatbot guide me on how to invite friends?",
+        "What questions can I ask the chatbot about the platform?"
+      ]
     }
   ]
 }

@@ -2,7 +2,9 @@
 
 /chatbot/.env
 /chatbot/.mypy_cache
+/chatbot/app/external_services/__pycache__
 /chatbot/app/__pycache__
+/chatbot/app/util/__pycache__
 /chatbot/app/configurations/__pycache__
 /chatbot/app/core/embedding/__pycache__
 /chatbot/app/core/language_models/__pycache__
