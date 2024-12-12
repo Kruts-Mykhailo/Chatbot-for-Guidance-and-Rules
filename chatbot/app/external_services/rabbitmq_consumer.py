@@ -82,7 +82,7 @@ async def process_game_added_event(
         event = GameAddedEvent(**event_data)
         rules = event.rules
 
-        text = f"Rules for {event.gameName}: {" ".join([" ".join([rule.rule, rule.description]) for rule in rules])}"
+        text = f"Rules for {event.gameName}: {' '.join([' '.join([rule.rule, rule.description]) for rule in rules])}"
         text_to_embed = " ".join(
             [query for query in generate_example_queries(event.gameName)]
         )

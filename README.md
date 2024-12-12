@@ -19,6 +19,13 @@ All models should be trained on information returned from file Statistics.csv
 
 ## Chatbot:
 
+## Requirements
+
+* Docker
+* Python >= 3.10
+* Ollama
+* Postgres
+
 ### Run the application:
 
 Prerequisites:   
@@ -28,6 +35,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
+cd chatbot/
+docker compose up -d
 ```
 
 Before running the application:  

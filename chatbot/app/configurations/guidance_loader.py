@@ -11,7 +11,7 @@ def seed_data() -> Tuple[List[str], List[str]]:
         file_path = os.path.join(os.path.dirname(__file__), PLATFORM_GUIDANCE_JSON)
         data = load_from_file(file_path)
         texts = [
-            f"Guidance for {guidance["topic"]}: " + " ".join(guidance["steps"])
+            f"Guidance for {guidance['topic']}: " + " ".join(guidance["steps"])
             for guidance in data["guidance"]
         ]
         infos = [" ".join(guidance["example_queries"]) for guidance in data["guidance"]]
