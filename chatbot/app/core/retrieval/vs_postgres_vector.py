@@ -130,7 +130,7 @@ class PGVectorSearch(VectorSearch):
 
                 if result and result["similarity"] is not None:
                     print(
-                        f"The cosine similarity to closest category: {result["similarity"]}"
+                        f"The cosine similarity to closest category: {result['similarity']}"
                     )
                     if result["similarity"] > self.similarity_threshold:
                         category = result["topic"]
