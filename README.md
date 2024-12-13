@@ -54,6 +54,25 @@ Start ollama
 ollama serve
 ```
 
+File structure for environment variables (.env):
+```
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+
+RABBITMQ_HOST=
+RABBITMQ_PORT=
+RABBITMQ_USER=
+RABBITMQ_PASSWORD=
+
+```
+
+
+
+
+
 Example running the application:
 ```
 cd chatbot/
@@ -89,12 +108,4 @@ python run_tools.py
 
 ## Chatbot additional information:
 
-Things considering to add:
-1. `pg_vector` cosine similarity 
-2. Update embeddings. Store a decent amount of queries that a user might ask about a specific document.
-3.
-
-When observed, the distance to the closest embedded text, the distance is around 0.78 -> 0.9. Due to usage of pg_vector, the distance is calculated using euclidian metric.
-
-The Cosine similarity may come in handy due to it being used for direction similarity, and not exactly word to word similarity.
-This can be implemented in pg_vector retrieval solution.
+PG_vector utilizes cosine similarity to identify the related text
