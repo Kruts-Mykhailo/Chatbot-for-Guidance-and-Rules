@@ -11,3 +11,4 @@
 /chatbot/app/core/retrieval/__pycache__
 /chatbot/app/routers/__pycache__
 /chatbot/app/services/__pycache__
+/chatbot/pgdata

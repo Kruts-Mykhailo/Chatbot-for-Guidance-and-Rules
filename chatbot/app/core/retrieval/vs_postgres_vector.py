@@ -56,6 +56,7 @@ class PGVectorSearch(VectorSearch):
                 with self.connection.cursor() as cursor:
                     cursor.execute(
                         """
+                        CREATE EXTENSION IF NOT EXISTS vector;
                         CREATE TABLE IF NOT EXISTS vector_data (
                             id SERIAL PRIMARY KEY,
                             topic INT NOT NULL,
