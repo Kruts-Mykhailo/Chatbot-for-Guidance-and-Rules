@@ -3,7 +3,7 @@ python-dotenv
 argparse
 ollama
 spacy
-pydantic`
+pydantic
 fastapi
 uvicorn
 numpy
