@@ -1,6 +1,8 @@
 import argparse
 import asyncio
 from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
+
 
 import uvicorn
 from fastapi import FastAPI
@@ -62,6 +64,15 @@ async def lifespan(app: FastAPI):
 
 # Initialize FastAPI app with lifespan
 app = FastAPI(lifespan=lifespan, strict_slashes=False)
+
+# Add CORS Middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  
+    allow_credentials=True,
+    allow_methods=["POST"], 
+    allow_headers=["*"],  
+)
 
 # Include routers
 app.include_router(chat_router, prefix="/chat", tags=["Chat"])
