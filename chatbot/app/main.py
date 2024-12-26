@@ -2,7 +2,8 @@ import argparse
 import asyncio
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-
+from dotenv import load_dotenv
+import os
 
 import uvicorn
 from fastapi import FastAPI
@@ -15,6 +16,12 @@ from app.external_services.rabbitmq_consumer import (
 )
 from app.routers.chat import chat_router
 
+load_dotenv()
+
+GAMEPLATFORM_URL = os.getenv("GAMEPLATFORM_URL")
+
+if not GAMEPLATFORM_URL:
+    raise ValueError("GAMEPLATFORM_URL environment variable is not set or empty.")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="RAG Chatbot Microservice")
@@ -68,7 +75,7 @@ app = FastAPI(lifespan=lifespan, strict_slashes=False)
 # Add CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  
+    allow_origins=[GAMEPLATFORM_URL],  
     allow_credentials=True,
     allow_methods=["POST"], 
     allow_headers=["*"],  
