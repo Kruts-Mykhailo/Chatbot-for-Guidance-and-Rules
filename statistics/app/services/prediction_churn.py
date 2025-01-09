@@ -5,14 +5,17 @@ from sqlalchemy import create_engine, text
 from app.configs.db_connection import fetch_data
 from app.data_preprocessing.preprocessing import preprocess_data, save_processed_csv
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-DB_URL = os.getenv("DB_URL", "localhost:5443")
-DB_NAME = os.getenv("DB_NAME", "statistics")
-DB_USER = os.getenv("DB_USER", "stats_admin")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "stats_adminpassword")
-TABLE_NAME = "player_predicitons"
+DB_URL = os.getenv("DB_URL")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+TABLE_NAME = os.getenv("TABLE_NAME")
 
 def predict_and_save_to_db():
     """

@@ -21,7 +21,6 @@ def preprocess_data(df):
             print(f"Missing column '{column}' detected. Adding default value 0.")
             df[column] = 0  # Default value for missing columns
 
-    # Fill NaN values with 0
     df.fillna(0, inplace=True)
 
     print("Preprocessing completed.")
@@ -34,7 +33,7 @@ def get_timestamped_filename(base_name="processed_player_metrics", extension="cs
 
     Args:
         base_name (str): The base name of the file.
-        extension (str): The file extension (e.g., "csv", "txt").
+        extension (str): The file extension.
 
     Returns:
         str: A timestamped filename.
@@ -70,7 +69,6 @@ if __name__ == "__main__":
     print("Processing data...")
     processed_df = preprocess_data(df)
 
-    # Save the processed data to a CSV file
     processed_csv_path = save_processed_csv(processed_df)
 
     print(f"Processed data is saved at: {processed_csv_path}")
