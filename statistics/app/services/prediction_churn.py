@@ -68,8 +68,6 @@ def predict_and_save_to_db():
     predictions_to_save.rename(columns={"player_id": "player_player_id"})
 
     logging.info(f"Saving predictions to the '{TABLE_NAME}' table...")
-    logging.info(f"Predictions to save:\n{predictions_to_save}")
-
     save_predictions_to_db(predictions_to_save)
 
 
