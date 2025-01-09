@@ -57,7 +57,7 @@ async def lifespan(app: FastAPI):
     vector_search = app.state.vector_search
     embedding_generator = app.state.embedding_generator
     add_queue_handler(
-        "new_game_queue",
+        "new_rules_queue",
         lambda data: process_game_added_event(data, vector_search, embedding_generator),
     )
     rabbitmq_task = asyncio.create_task(start_all_queue_listeners())
