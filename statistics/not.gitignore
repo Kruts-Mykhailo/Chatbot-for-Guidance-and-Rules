@@ -1,6 +1,7 @@
-./.env
+statistics/app
+statistics/app/*
 
-./app/__pycache__
+*__pycache__/*
 ./app/configurations/__pycache__
 ./app/core/embedding/__pycache__
 ./app/core/language_models/__pycache__
