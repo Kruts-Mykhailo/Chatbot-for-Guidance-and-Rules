@@ -11,23 +11,24 @@ def train_model():
     Train the churn prediction model with SMOTE to handle class imbalance
     and hyperparameter tuning using GridSearchCV.
     """
-    training_csv = "./data/train/training_data.csv"
+    training_csv = "./data/train/training_data_updated.csv"
     if not os.path.exists(training_csv):
         raise FileNotFoundError(f"Training dataset not found at {training_csv}")
 
     print(f"Loading training dataset from '{training_csv}'...")
     df = pd.read_csv(training_csv)
 
-    X = df[[
-        "total_games_played",
-        "weekend_ratio",
-        "evening_ratio",
-        "avg_game_duration",
-        "total_weekdays_played",
-        "total_weekends_played",
-        "avg_moves_per_game"
+    X = df[[  
+        "TotalGamesPlayed",
+        "TotalWeekdaysPlayed",
+        "TotalWeekendsPlayed",
+        "AvgMoveDuration",
+        "TotalMorningPlays",
+        "TotalAfternoonPlays",
+        "TotalEveningPlays",
+        "TotalNightPlays"
     ]]
-    y = df["churn"]  # Target variable (1 for churn, 0 for not churn)
+    y = df["Churn"]  # Target variable (1 for churn, 0 for not churn)
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, stratify=y, random_state=42
@@ -55,7 +56,7 @@ def train_model():
         estimator=RandomForestClassifier(random_state=42),
         param_grid=param_grid,
         cv=kf,
-        scoring='f1',
+        scoring='f1',  
         n_jobs=-1
     )
 
@@ -73,7 +74,7 @@ def train_model():
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
     print(classification_report(y_test, y_pred))
 
-    model_path = "churn_model_smote.pkl"
+    model_path = "./trained_models/churn/churn_model.pkl"
     joblib.dump(best_model, model_path)
     print(f"Best model saved to '{model_path}'.")
 
