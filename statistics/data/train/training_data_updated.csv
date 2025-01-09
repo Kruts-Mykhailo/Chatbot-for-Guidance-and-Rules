@@ -1,4 +1,4 @@
-PlayerId,Country,City,Age,Gender,TotalGamesPlayed,TotalWins,TotalLosses,TotalDraws,TotalIsFirst,AvgMoveDuration,TotalWeekdaysPlayed,TotalWeekendsPlayed,TotalMorningPlays,TotalAfternoonPlays,TotalEveningPlays,TotalNightPlays,Churn,FirstMoveWinProbability,PlayerClass
+player_id,country,city,age,gender,total_games_played,total_wins,total_losses,total_draws,total_is_first,avg_move_duration,total_weekdays_played,total_weekends_played,total_morning_plays,otal_afternoon_plays,total_evening_plays,total_night_plays,churn,first_move_win_probability,player_class
 a52df17b-7eb7-41d2-9830-29c42d2378e8,Grenada,New Mark,56,Male,116,47,8,5,2,21.868917117853982,183,168,72,90,52,9,1,0.8099646593250173,BEGINNER
 52bd3158-631f-4341-a46b-47dae6cb69f4,Serbia,South Davidberg,46,Female,298,163,105,3,5,31.25846048811079,68,155,4,75,29,59,1,0.6177162950141093,OWL_PLAYER
 f5aba13a-d032-4c18-b26c-b2e7105feaa2,Cape Verde,Port Richard,49,Female,77,67,1,3,19,45.0589016521321,46,92,24,35,63,56,1,0.40769138661051607,PRO_GAMER

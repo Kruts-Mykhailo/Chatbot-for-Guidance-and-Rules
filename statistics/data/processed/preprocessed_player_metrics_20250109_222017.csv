@@ -1,0 +1,6 @@
+player_player_id,total_games_played,total_wins,total_losses,total_draws,total_is_first,avg_move_duration,total_weekdays_played,total_weekends_played,total_morning_plays,total_afternoon_plays,total_evening_plays,total_night_plays,player_id,country,city,age,gender
+f7c56b6e-d7dc-4bde-bdf9-e9b0ecec8bf5,50,28,20,2,25,5.5,35,15,5,10,12,8,0,0,0,0,0
+6a1d9b5a-e2e2-4060-9025-3175acd06e3c,100,65,30,5,50,6.7,70,30,10,20,18,12,0,0,0,0,0
+3d8a9e74-8534-43af-99a0-d60593acb4a6,30,15,10,1,15,4.2,20,10,4,5,6,5,0,0,0,0,0
+d5f26e7f-91dc-4b2f-baff-5e3a9d87e31f,120,72,40,8,60,7.8,80,40,15,25,20,18,0,0,0,0,0
+9f5a15c2-3b2e-476d-9c78-64e1ecf5a2ad,75,40,25,3,35,5.0,50,25,7,12,10,9,0,0,0,0,0

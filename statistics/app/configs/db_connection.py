@@ -32,22 +32,23 @@ def fetch_data():
     """
     query = """
         SELECT
-            player_player_id AS player_id,
+            player_player_id,
             total_games_played,
-            total_wins,
+            total_wins ,
             total_losses,
-            total_draws,
-            avg_game_duration,
-            total_night_plays,
+            total_draws ,
+            total_is_first ,
+            avg_move_duration,
             total_weekdays_played,
             total_weekends_played,
-            total_morning_plays,
+            total_morning_plays ,
             total_afternoon_plays,
-            total_evening_plays,
-            total_night_plays
+            total_evening_plays ,
+            total_night_plays 
         FROM
             player_metrics
     """
+
     try:
         conn = get_connection()
         df = pd.read_sql_query(query, conn)

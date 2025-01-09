@@ -15,20 +15,22 @@ def train_model():
     if not os.path.exists(training_csv):
         raise FileNotFoundError(f"Training dataset not found at {training_csv}")
 
+
     print(f"Loading training dataset from '{training_csv}'...")
     df = pd.read_csv(training_csv)
+    print(df.info())
 
     X = df[[  
-        "TotalGamesPlayed",
-        "TotalWeekdaysPlayed",
-        "TotalWeekendsPlayed",
-        "AvgMoveDuration",
-        "TotalMorningPlays",
-        "TotalAfternoonPlays",
-        "TotalEveningPlays",
-        "TotalNightPlays"
+    "total_games_played",
+    "total_weekdays_played",
+    "total_weekends_played",
+    "avg_move_duration",
+    "total_morning_plays",
+    "total_evening_plays",
+    "total_night_plays"
     ]]
-    y = df["Churn"]  # Target variable (1 for churn, 0 for not churn)
+
+    y = df["churn"]  # Target variable (1 for churn, 0 for not churn)
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, stratify=y, random_state=42
@@ -74,7 +76,7 @@ def train_model():
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
     print(classification_report(y_test, y_pred))
 
-    model_path = "./trained_models/churn/churn_model.pkl"
+    model_path = "./app/trained_models/churn/churn_model.pkl"
     joblib.dump(best_model, model_path)
     print(f"Best model saved to '{model_path}'.")
 
