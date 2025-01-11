@@ -11,7 +11,7 @@ from app.services.secrets.retriever_abstract import BaseRetriever
 load_dotenv()
 dictConfig(LOGGING_CONFIG)
 
-class LocalRetriever(BaseRetriever):
+class LocalSecretRetriever(BaseRetriever):
     def __init__(self) -> None:
         super().__init__()
     
