@@ -1,5 +1,6 @@
 from app.core.language_models.llm_abstract import BaseLLM
 from app.core.language_models.llm_ollama import OllamaLLM
+from app.core.language_models.llm_chatgpt import ChatGPTLLM
 
 
 def get_llm_instance(llm_type: str) -> BaseLLM:
@@ -12,6 +13,8 @@ def get_llm_instance(llm_type: str) -> BaseLLM:
     """
     if llm_type == "ollama":
         return OllamaLLM()
+    if llm_type == "openai":
+        return ChatGPTLLM()
     else:
         raise ValueError(f"Unsupported LLM type: {llm_type}")
 
