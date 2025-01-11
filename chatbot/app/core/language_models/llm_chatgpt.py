@@ -1,12 +1,7 @@
-import ollama
-
-from app.core.language_models.llm_abstract import BaseLLM
-
-OLLAMA_MODEL = "llama2"
+from chatbot.app.core.language_models.llm_abstract import BaseLLM
 
 
-class OllamaLLM(BaseLLM):
-
+class ChatGPTLLM(BaseLLM):
     def __init__(self):
         self.model = OLLAMA_MODEL
 
