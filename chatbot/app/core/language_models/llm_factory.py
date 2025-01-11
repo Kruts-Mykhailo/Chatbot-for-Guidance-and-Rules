@@ -3,7 +3,7 @@ from app.core.language_models.llm_ollama import OllamaLLM
 from app.core.language_models.llm_chatgpt import ChatGPTLLM
 
 
-def get_llm_instance(llm_type: str) -> BaseLLM:
+def get_llm_instance(llm_type: str, **kwargs) -> BaseLLM:
     """
     Factory function to create an instance of the requested LLM implementation.
 
@@ -14,7 +14,8 @@ def get_llm_instance(llm_type: str) -> BaseLLM:
     if llm_type == "ollama":
         return OllamaLLM()
     if llm_type == "openai":
-        return ChatGPTLLM()
+        secrets_retriever = kwargs.get("secrets_retriever", None)
+        return ChatGPTLLM(secrets_retriever)
     else:
         raise ValueError(f"Unsupported LLM type: {llm_type}")
 

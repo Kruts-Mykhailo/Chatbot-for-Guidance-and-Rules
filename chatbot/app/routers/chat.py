@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
-from app.dependencies import get_embedding_generator, get_model, get_vector_search
+from app.dependencies import get_embedding_generator, get_model, get_secrets_retriever, get_vector_search
 from app.services.rag_pipeline import rag_pipeline
 
 

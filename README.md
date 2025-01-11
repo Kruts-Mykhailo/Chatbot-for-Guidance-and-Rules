@@ -47,7 +47,7 @@ Current chatbot application presents ability to select different aspects of RAG:
 * Embedding generator (e.g Sentence transformer library)
 * Large Language model (e.g. Local ollama)
 
-⚠️ If you are planning on using `ollama`, install it locally (version: `llama2`).  
+⚠️ If you are planning on using `ollama`, install it locally or use docker compose.  
 
 Start ollama
 ```
@@ -80,7 +80,8 @@ cd chatbot/
 python -m app.main \
 --search_type=pgvector \ 
 --generator_type=sentence_transformer \
---model_type=ollama
+--model_type=ollama \ 
+--secrets_type=local
 
 ```
 

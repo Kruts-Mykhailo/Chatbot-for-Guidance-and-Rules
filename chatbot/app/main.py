@@ -43,6 +43,12 @@ def parse_args():
         required=True,
         help="Type of model for RAG (e.g., ollama)",
     )
+    parser.add_argument(
+        "--secret_type",
+        type=str,
+        required=True,
+        help="Type of secrets retriever (e.g., local, gcloud)",
+    )
     return parser.parse_args()
 
 
@@ -56,6 +62,7 @@ async def lifespan(app: FastAPI):
 
     vector_search = app.state.vector_search
     embedding_generator = app.state.embedding_generator
+    secrets_retriever = app.state.secrets_retriever
     add_queue_handler(
         "new_rules_queue",
         lambda data: process_game_added_event(data, vector_search, embedding_generator),

@@ -4,14 +4,12 @@ from typing import Any, Iterable
 from app.core.language_models.llm_abstract import BaseLLM
 import os
 
+from app.services.secrets.retriever_local import BaseRetriever
+
 class ChatGPTLLM(BaseLLM):
-    def __init__(self):
-        self.api_key = os.getenv("OPENAI_API_KEY")
+    def __init__(self, secrets_retriever: BaseRetriever):
+        self.api_key = secrets_retriever.get("OPENAI_API_KEY")
         self.model = "gpt-4o-mini"
-        
-        if not self.api_key:
-            return "Error: OPENAI_API_KEY environment variable is not set."
-        
         self.client = OpenAI(api_key=self.api_key)
 
     def generate(self, prompt: str, **kwargs) -> str:
