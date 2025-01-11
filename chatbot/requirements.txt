@@ -2,7 +2,6 @@ sentence_transformers
 python-dotenv
 argparse
 ollama
-spacy
 pydantic
 fastapi
 uvicorn
@@ -14,3 +13,6 @@ mypy
 stubs
 types-psycopg2
 aio-pika
+google-cloud-secret-manager
+openai
+stanza

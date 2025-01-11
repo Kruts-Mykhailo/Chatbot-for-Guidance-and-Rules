@@ -2,7 +2,7 @@ import ollama
 
 from app.core.language_models.llm_abstract import BaseLLM
 
-OLLAMA_MODEL = "llama3"
+OLLAMA_MODEL = "llama2"
 
 
 class OllamaLLM(BaseLLM):
