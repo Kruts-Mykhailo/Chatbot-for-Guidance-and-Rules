@@ -34,7 +34,6 @@ Prerequisites:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python -m spacy download en_core_web_sm
 cd chatbot/
 docker compose up -d
 ```
@@ -68,10 +67,9 @@ RABBITMQ_USER=
 RABBITMQ_PASSWORD=
 
 GAMEPLATFORM_URL=
+
+OPENAI_API_KEY=
 ```
-
-
-
 
 
 Example running the application:
