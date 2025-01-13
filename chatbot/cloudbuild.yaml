@@ -20,6 +20,16 @@ steps:
       'push',
       '$_DOCKER_IMAGE_PATH'
     ]
+  
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:latest'
+    id: 'download-env-vars'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        echo "Downloading environment variables file from Cloud Storage..."
+        gsutil cp gs://my-bucket-banditgames/env-vars.yaml ./env-vars.yaml
+        echo "Environment variables file downloaded."
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -41,7 +51,9 @@ steps:
       'all-traffic',
       '--ingress',
       'internal',
-      '--allow-unauthenticated'
+      '--allow-unauthenticated',
+      '--env-vars-file',
+      'env-vars.yaml'
     ]
 
 substitutions:

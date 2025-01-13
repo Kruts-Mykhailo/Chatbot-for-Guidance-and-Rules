@@ -14,7 +14,7 @@ dictConfig(LOGGING_CONFIG)
 
 class GoogleCloudSecretRetriever(BaseRetriever):
     def __init__(self) -> None:
-        self.project_id = "1038104239259"
+        self.project_id = "245523151459"
         super().__init__()
     
     def get(self, variable_name: str, **kwargs) -> str:

@@ -18,8 +18,8 @@ COPY chatbot/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./app /app
+COPY chatbot/app /app
 
 EXPOSE 8080
 
-CMD ["python", "-m", "app.main", "--search_type=pgvector", "--generator_type=sentence_transformer", "--model_type=openai", "--secret_type=local"]
+CMD ["python", "-m", "app.main", "--search_type=pgvector", "--generator_type=sentence_transformer", "--model_type=openai", "--secret_type=gcloud"]
