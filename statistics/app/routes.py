@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.models.models import PredictionsRequest, PredictionsResponse, PlayerPredictionsBody
+from app.models.schemas import PredictionsRequest, PredictionsResponse, PlayerPredictionsBody
 from app.services.model import PlayerMetricsModel
 import pandas as pd
 
