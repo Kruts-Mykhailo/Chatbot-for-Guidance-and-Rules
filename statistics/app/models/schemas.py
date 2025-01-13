@@ -2,15 +2,25 @@ from pydantic import BaseModel
 from typing import List
 
 class PlayerMetricsBody(BaseModel):
-    PlayerId: str
-    TotalGamesPlayed: int
-    TotalWins: int
-    TotalLosses: int
-    AvgMoveDuration: float
-    TotalWeekdaysPlayed: int
-    TotalWeekendsPlayed: int
-    TotalIsFirst: int
-    TotalDraws: int
+    playerId: str
+    gender: str
+    age: int
+    country: str
+    city: str
+    totalGamesPlayed: int
+    totalWins: int
+    totalLosses: int
+    totalDraws: int
+    totalIsFirst: int
+    avgMoveDuration: float
+    avgMoveAmount: float
+    avgGameDuration: float
+    totalWeekdaysPlayed: int
+    totalWeekendsPlayed: int
+    totalMorningPlays: int
+    totalAfternoonPlays: int
+    totalEveningPlays: int
+    totalNightPlays: int
 
 class PredictionsRequest(BaseModel):
     playerMetrics: List[PlayerMetricsBody]

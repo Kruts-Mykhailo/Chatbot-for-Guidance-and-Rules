@@ -41,6 +41,8 @@ class PlayerMetricsModel:
             "TotalGamesPlayed", "TotalWins", "TotalLosses", "AvgMoveDuration",
             "TotalWeekdaysPlayed", "TotalWeekendsPlayed", "TotalIsFirst", "TotalDraws"
         ]
+        player_metrics.columns = [col[0].upper() + col[1:] if col[0].islower() else col for col in player_metrics.columns]
+
         X = player_metrics[features]
         X_scaled = self.scaler.transform(X)
 
