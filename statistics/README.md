@@ -52,7 +52,7 @@ The trained model will be saved to `app/trained_models/churn/churn_model.pkl`.
 #### Step 1: Start the FastAPI Server
 Ensure you have the trained model file (`churn_model.pkl`) in `app/trained_models/churn/`. Start the FastAPI server using:
 ```bash
-uvicorn main:app --reload
+python -m app.main  
 ```
 
 The API will be available at: `http://127.0.0.1:8000`
@@ -65,5 +65,5 @@ Send a POST request to `/predict` to fetch data, preprocess it, predict churn, a
 
 Example using `curl`:
 ```bash
-curl -X POST http://127.0.0.1:8000/predict
+curl -X POST http://127.0.0.1:9090/predict
 ```

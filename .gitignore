@@ -2,3 +2,4 @@
 **/__pycache__/
 **/pgdata/
 **/.env
+statistics/app/models/__pycache__
