@@ -24,6 +24,6 @@ services:
     restart: unless-stopped
     container_name: ollama
 
-
+#Comment
 volumes:
   pgdata:

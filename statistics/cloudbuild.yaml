@@ -13,7 +13,7 @@ steps:
       'build',
       '-t', '$_DOCKER_IMAGE_PATH',
       '--cache-from', '$_DOCKER_IMAGE_PATH',
-      '-f', 'chatbot/Dockerfile',
+      '-f', 'statistics/Dockerfile',
       '.'
     ]
 
