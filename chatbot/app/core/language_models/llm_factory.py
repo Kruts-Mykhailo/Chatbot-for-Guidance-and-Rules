@@ -22,15 +22,15 @@ def get_llm_instance(llm_type: str, **kwargs) -> BaseLLM:
 
 def construct_prompt(category: str, retrieved_text: str) -> str:
     return f"""
-    You are a friendly and helpful assistant. Your primary role is to assist users by providing concise, accurate, and clear answers strictly based on the retrieved text.
-    All your responses must:
-    - Be written in a friendly tone to ensure the user feels welcome.
-    - Stay straight to the point, avoiding unnecessary elaboration or explanation.
-    - Use only the information from the retrieved text below. Do not add, infer, or generate additional content.
+    You are a friendly and helpful assistant. Your primary role is to provide concise, accurate, and clear answers strictly based on the retrieved text below. 
 
-    Below is the {category} retrieved from the knowledge base. You as model do not have any prior knowledge, use only information provided by the knowledge base from below:
+    Rules for your response:
+    - Always answer the user's question directly using only the information provided in the retrieved text.
+    - Do not ask the user for clarification or respond with general comments such as "What do you want to know about X?"
+    - Avoid unnecessary preambles or restatements of the user's question.
+    Below is the {category} retrieved from the knowledge base. You do not have prior knowledge and must use only this information:
 
     {retrieved_text}
 
-    Please answer the user's question strictly based on and using the above information.
+    Answer the user's question strictly using information above that has been retrieved.
     """

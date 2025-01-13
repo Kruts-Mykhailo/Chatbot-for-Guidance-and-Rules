@@ -77,14 +77,27 @@ class PGVectorSearch(VectorSearch):
         if self.connection:
             try:
                 with self.connection.cursor() as cursor:
-                    sql = """
-                        INSERT INTO vector_data (topic, text, info, embeddings)
-                        VALUES (%s, %s, %s, %s);
+                    # Check if the text already exists in the database
+                    check_sql = """
+                        SELECT COUNT(*)
+                        FROM vector_data
+                        WHERE text = %s;
                     """
-                    data = [(topic, text_to_embed, info, embeddings.tolist())]
-                    execute_batch(cursor, sql, data)
-                    self.connection.commit()
-                    logging.info("Data uploaded successfully.")
+                    cursor.execute(check_sql, (text_to_embed,))
+                    exists = cursor.fetchone()[0] > 0
+
+                    if exists:
+                        logging.info("Text already exists in the database. No action taken.")
+                    else:
+                        # Insert the data if the text does not exist
+                        sql = """
+                            INSERT INTO vector_data (topic, text, info, embeddings)
+                            VALUES (%s, %s, %s, %s);
+                        """
+                        data = [(topic, text_to_embed, info, embeddings.tolist())]
+                        execute_batch(cursor, sql, data)
+                        self.connection.commit()
+                        logging.info("Data uploaded successfully.")
             except Exception as e:
                 logging.error(f"Error uploading data: {e}")
 
@@ -289,13 +302,25 @@ class PGVectorSearch(VectorSearch):
 
         try:
             with self.connection.cursor() as cursor:
-                sql = """
-                    INSERT INTO game_names(name)
-                    VALUES (%s);
+                # Check if the game_name already exists
+                check_sql = """
+                    SELECT COUNT(*)
+                    FROM game_names
+                    WHERE name = %s;
                 """
-                data = [(game_name,)]
-                execute_batch(cursor, sql, data)
-                self.connection.commit()
-                logging.info(f"New game {game_name} added successfully.")
+                cursor.execute(check_sql, (game_name,))
+                exists = cursor.fetchone()[0] > 0
+
+                if exists:
+                    logging.info(f"Game name '{game_name}' already exists. No action taken.")
+                else:
+                    # Insert the game_name if it doesn't exist
+                    insert_sql = """
+                        INSERT INTO game_names(name)
+                        VALUES (%s);
+                    """
+                    cursor.execute(insert_sql, (game_name,))
+                    self.connection.commit()
+                    logging.info(f"New game '{game_name}' added successfully.")
         except Exception as e:
             logging.error(f"Error uploading game name: {e}")
