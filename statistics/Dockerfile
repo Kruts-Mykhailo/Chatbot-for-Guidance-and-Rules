@@ -21,6 +21,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY statistics/app /app
 COPY statistics/data /data
 
-EXPOSE 9090
+EXPOSE 8080
 
 CMD ["python", "-m", "app.main"]
