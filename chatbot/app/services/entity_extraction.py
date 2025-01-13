@@ -16,6 +16,7 @@ def get_game_entities(query: str) -> set[str]:
 
 
 def is_game_not_known(findings: set[str], known_games: List[str]) -> bool:
+    known_games = [game.lower() for game in known_games]
     for finding in findings:
         if finding.lower() in known_games:
             return False
