@@ -47,7 +47,7 @@ steps:
       'internal',
       '--allow-unauthenticated',
       '--set-env-vars',
-      'GAME_PLATFORM_URL=https://internal.local/gameplatform'
+      'GAMEPLATFORM_URL=https://internal.local/gameplatform'
     ]
 
 substitutions:
