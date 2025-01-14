@@ -49,7 +49,7 @@ steps:
       '1',
       '--allow-unauthenticated',
       '--set-env-vars',
-      'GAMEPLATFORM_URL=https://internal.local/gameplatform'
+      'GAMEPLATFORM_URL=https://gameplatform-service-245523151459.europe-west1.run.app'
     ]
 
 substitutions:
