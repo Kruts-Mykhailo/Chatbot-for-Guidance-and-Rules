@@ -45,6 +45,8 @@ steps:
       'all-traffic',
       '--ingress',
       'internal',
+      '--min-instances',
+      '1',
       '--allow-unauthenticated',
       '--set-env-vars',
       'GAMEPLATFORM_URL=https://internal.local/gameplatform'
