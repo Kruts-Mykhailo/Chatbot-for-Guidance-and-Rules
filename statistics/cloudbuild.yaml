@@ -44,7 +44,7 @@ steps:
       '--vpc-egress',
       'all-traffic',
       '--ingress',
-      'internal',
+      'all',
       '--min-instances',
       '1',
       '--allow-unauthenticated',
