@@ -1,6 +1,6 @@
 .venv/
 **/__pycache__/
 **/pgdata/
-**/rabbitmq_data
+**/rabbitmq_data/
 **/.env
 statistics/app/models/__pycache__

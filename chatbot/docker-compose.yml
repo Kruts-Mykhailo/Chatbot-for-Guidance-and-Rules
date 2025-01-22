@@ -19,11 +19,15 @@ services:
       timeout: 5s
       retries: 5
   ollama:
-    image: ollama/ollama:latest
-    ports:
-      - "11434:11434"
-    restart: unless-stopped
+    image: ollama/ollama:latest  # Use the latest Ollama image
     container_name: ollama
+    ports:
+      - "11434:11434"  # Map port 11434 for external access
+    volumes:
+      - ollama_data:/root/.ollama  # Persistent storage for Ollama data
+    restart: unless-stopped
+    entrypoint: ["ollama", "serve"]  # Start the Ollama app
+
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -40,3 +44,5 @@ services:
 volumes:
   pgdata:
   rabbitmq_data:
+  ollama_data:
+    driver: local
