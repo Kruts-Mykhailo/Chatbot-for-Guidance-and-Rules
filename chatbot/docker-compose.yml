@@ -25,6 +25,18 @@ services:
     restart: unless-stopped
     container_name: ollama
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: app_rabbitmq
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # Management console port
+    environment:
+      RABBITMQ_DEFAULT_USER: user  # Default username
+      RABBITMQ_DEFAULT_PASS: password  # Default password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 #Comment
 volumes:
   pgdata:
+  rabbitmq_data:

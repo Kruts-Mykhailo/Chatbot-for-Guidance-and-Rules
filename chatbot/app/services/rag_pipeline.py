@@ -30,5 +30,5 @@ def rag_pipeline(
         return "Sorry, I do not know anything about this game. I am a chatbot that can only utilize the information from my knowledge base."
     
     base_prompt = construct_prompt(category, retrieved_text)
-    response = model.generate(prompt=base_prompt)
+    response = model.generate(prompt=base_prompt, query=query[0])
     return response
